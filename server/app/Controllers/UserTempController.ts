@@ -26,7 +26,7 @@ export default class AdminController extends BaseController {
     const { auth } = this.request;
     let inputs = this.request.all();
     let project = [
-      "user_temps.username",
+      // "user_temps.username",
       "user_temps.email",
       "user_temps.roleId",
       "user_temps.id",
@@ -54,7 +54,7 @@ export default class AdminController extends BaseController {
     };
     let inputs = this.request.all();
     let userTemp = await this.Model.query().where("id", auth.id).first();
-    logger.info(`View Detail [usernameView:${userTemp.username}] `);
+    logger.info(`View Detail [usernameView:${userTemp.email}] `);
     let params = this.validate(inputs, allowFields, {
       removeNotAllow: true,
     });
@@ -64,7 +64,7 @@ export default class AdminController extends BaseController {
       throw new ApiException(6000, "user doesn't exist!");
     }
     logger.info(
-      `Show detail user [usernameView:${userTemp.username
+      `Show detail user [usernameView:${userTemp.email
       },username:${JSON.stringify(result)}] `
     );
     return result;
@@ -74,7 +74,7 @@ export default class AdminController extends BaseController {
     let token = Auth.generateJWT(
       {
         id: user.id,
-        username: user.username,
+        // username: user.username,
         email: user.email,
       },
       {
@@ -97,8 +97,8 @@ export default class AdminController extends BaseController {
     let userInfo = {
       ...inputs
     }
-    let usernameExist = await this.Model.findExist(inputs.username, "username");
-    if (usernameExist) throw new ApiException(6007, "Username already exists!");
+    // let usernameExist = await this.Model.findExist(inputs.username, "username");
+    // if (usernameExist) throw new ApiException(6007, "Username already exists!");
 
     let emailExist = await this.Model.findExist(inputs.email, "email");
     if (emailExist) throw new ApiException(6021, "Email already exists!");
@@ -167,7 +167,7 @@ export default class AdminController extends BaseController {
       email: "string!",
     };
     let userTemp = await this.Model.getById(auth.id);
-    logger.info(`Update user [username:${userTemp.username}] `);
+    logger.info(`Update user [username:${userTemp.email}] `);
     let params = this.validate(inputs, allowFields, {
       removeNotAllow: true,
     });
@@ -260,7 +260,7 @@ export default class AdminController extends BaseController {
       ...params,
       twofaKey,
       isFirst: 1,
-      username: userTemp.username, //remember to remove this in the future
+      // username: userTemp.username, //remember to remove this in the future
       email: userTemp.email,
       roleId: userTemp.roleId,
       tenantId: userTemp.tenantId,
@@ -300,7 +300,7 @@ export default class AdminController extends BaseController {
     await user.$query().delete();
     let userAuth = await this.Model.getById(auth.id);
     logger.info(
-      `Destroy user [username:${userAuth.username},userDelete:${JSON.stringify(
+      `Destroy user [username:${userAuth.email},userDelete:${JSON.stringify(
         user
       )}] `
     );
@@ -333,12 +333,12 @@ export default class AdminController extends BaseController {
     }
     let userAuth = await this.Model.getById(auth.id);
     logger.info(
-      `Delete user [username:${userAuth.username
+      `Delete user [username:${userAuth.email
       },listUserDelete:${JSON.stringify(users)}] `
     );
     return {
       old: {
-        usernames: (users || []).map((user) => user.username).join(", "),
+        email: (users || []).map((user) => user.email).join(", "),
       },
     };
   }

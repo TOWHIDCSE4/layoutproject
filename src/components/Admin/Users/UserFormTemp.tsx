@@ -39,36 +39,7 @@ const UserFormTemp = ({ form, isEdit, isTenant = false, }: { form: any; isEdit: 
 
   return (
     <Row gutter={[24, 0]}>
-      <Col md={24}>
-        <Form.Item
-          label={t("pages:users.form.username")}
-          name="username"
-          rules={[
-            {
-              required: true,
-              message: t("messages:form.required", {
-                name: t("pages:users.form.username"),
-              }),
-            },
-            {
-              whitespace: true,
-              message: t("messages:form.required", {
-                name: t("pages:users.form.username"),
-              }),
-            },
-            CustomRegex({
-              length: 6,
-              reGex: "^[0-9A-z._](\\w|\\.|_){5,100}$",
-              message: t("messages:form.username"),
-            }),
-          ]}
-        >
-          <Input
-            placeholder={t("pages:users.form.username")}
-            readOnly={isEdit}
-          />
-        </Form.Item>
-      </Col>
+      
 
       {!isEdit ? (
         <>

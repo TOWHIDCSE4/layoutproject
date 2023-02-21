@@ -9,13 +9,13 @@ import useSWR from 'swr'
 
 
 const Sidebar = dynamic(() => import('./includes/Admin/Sidebar'), { ssr: false })
-const Header = dynamic(() => import('./includes/Admin/Header'), { ssr: false })
+// const Header = dynamic(() => import('./includes/Admin/Header'), { ssr: false })
 const BreadCrumb = dynamic(() => import('@src/components/BreadCrumb'), { ssr: false })
 
 const THEME ="dark";
 const { publicRuntimeConfig } = getConfig()
 const { Title, Text } = Typography;
-const { Content, Footer } = Layout;
+const { Content, Footer, Header } = Layout;
 
 const TempUserInfo = (props: any) => {
   const { router, t, setStore } = useBaseHooks();
@@ -61,7 +61,7 @@ const TempUserInfo = (props: any) => {
           
           <Layout>
             <div id="primaryLayout"></div>
-
+            <Header style={{background:'white'}}/>
             <Content className={`main-layout ${collapsed ? "collapsed" : ""}`}>
               {/* <Header onCollapseChange={onCollapseChange} /> */}
               <div className="breadcumbs">

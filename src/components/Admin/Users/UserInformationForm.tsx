@@ -136,7 +136,7 @@ const UserInformationForm = ({ form }: { form: any; }) => {
       </Col>
       <Col md={12}>
         <Form.Item label={t("pages:users.form.avatar")} name="avatar">
-          <UploadMultilField listType="picture-card" isImg={true} onChange={handleFileChange}>
+          <UploadMultilField listType="picture-card" isImg={true} onChange={handleFileChange} multiple={false}>
             <PlusOutlined />
           </UploadMultilField>
         </Form.Item>
