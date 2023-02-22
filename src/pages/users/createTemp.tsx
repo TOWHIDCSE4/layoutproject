@@ -43,8 +43,8 @@ const CreateTemp = () => {
 
   return (
     <>
-      <div className="content-form">
-        <div className="logo"></div>
+      <div className="content">
+        {/* <div className="logo"></div> */}
         <div className="form-registration" id="registration">
           {/* <div className="content-form-login">
             <div className="sitename-title">Create a new account</div>
@@ -67,7 +67,7 @@ const CreateTemp = () => {
             scrollToFirstError
           >
             <Row>
-              <Col md={{ span: 16, offset: 4 }}>
+              <Col md={{ span: 24, offset: 0 }}>
                 <UserInformationForm form={form} />
                 <Form.Item  wrapperCol={{ span: 8, offset: 8 }} className="text-center">
                   <Button
