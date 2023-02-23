@@ -177,7 +177,10 @@
       "tenant": "Tenant",
       "phone": "Phone",
       "birthday": "Date Of Birth",
-      "avatar": "Profile Picture"
+      "avatar": "Profile Picture",
+      "commuteMethod": "Commute Method",
+      "marriedStatus": "Married Status",
+      "gender": "Gender"
     }
   },
 

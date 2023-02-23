@@ -189,12 +189,15 @@ export default class AdminController extends BaseController {
   async updateUserTemp() {
     let data = this.request.all();
     const allowFields = {
-      token: "string!",
-      firstName: "string!",
-      lastName: "string!",
-      phone: "string!",
-      birthday: "date!"
-    }
+		token: "string!",
+		firstName: "string!",
+		lastName: "string!",
+		phone: "string!",
+		birthday: "date!",
+		gender: "string!",
+		commuteMethod: "string!",
+		marriedStatus: "string!",
+	};
     let params = this.validate(data, allowFields, { removeNotAllow: true });
     let { token } = params
     delete params.token
@@ -247,16 +250,16 @@ export default class AdminController extends BaseController {
     }
 
     params = {
-      ...params,
-      twofaKey,
-      isFirst: 1,
-      email: userTemp.email,
-      roleId: userTemp.roleId,
-      tenantId: userTemp.tenantId,
-      password: userTemp.password,
-      createdBy: userTemp.createdBy,
-      photo: fieldnameFile.length ? fieldnameFile[0].link : null
-    }
+		...params,
+		twofaKey,
+		isFirst: 1,
+		email: userTemp.email,
+		roleId: userTemp.roleId,
+		tenantId: userTemp.tenantId,
+		password: userTemp.password,
+		createdBy: userTemp.createdBy,
+		photo: fieldnameFile.length ? fieldnameFile[0].link : null,
+	};
 
     let result = await UserModel.insertOne(params);
     let code = hashNumber(String(result.id));

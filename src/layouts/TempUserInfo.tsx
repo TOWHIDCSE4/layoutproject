@@ -19,7 +19,7 @@ const Login = (props: any) => {
     </Head>
     <div id="login">
       <Content className="content">
-          <div className="background-login" style={{height:"250px"}}></div>
+          <div className="background-login"></div>
           <div className="background-login-display"></div>
           <div >
             {/* <Row gutter={[24, 0]}> */}
