@@ -11,7 +11,7 @@ class UserTempModel extends BaseModel {
 
 	//fields
 	id: number;
-	username: string;
+	// username: string;
 	password: string;
 	email: string;
 	roleId: number;

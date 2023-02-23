@@ -1,10 +1,10 @@
 import React from "react";
-import { Form, Input, Row, Col } from "antd";
+import { Form, Input, Row, Col,Upload } from "antd";
 import useBaseHook from "@src/hooks/BaseHook";
-import { PlusOutlined } from "@ant-design/icons";
+import { InboxOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import UploadMultilField from "../../Upload";
-
+const { Dragger } = Upload;
 const UserInformationForm = ({ form }: { form: any; }) => {
   const { t } = useBaseHook();
   const handleFileChange = async (files) => {
@@ -134,12 +134,16 @@ const UserInformationForm = ({ form }: { form: any; }) => {
           <Input type="date" placeholder={t("pages:users.form.birthday")} />
         </Form.Item>
       </Col>
-      <Col md={12}>
-        <Form.Item label={t("pages:users.form.avatar")} name="avatar">
-          <UploadMultilField listType="picture-card" isImg={true} onChange={handleFileChange}>
-            <PlusOutlined />
+      <Col md={6}>
+        <Dragger className="ant-upload-drag-icon"
+          // multiple={false}
+          name="avatar">
+          <p>{t("pages:users.form.avatar")}</p>
+          <UploadMultilField listType="picture-card" isImg={true}
+            multiple={false} onChange={handleFileChange}>
+            <InboxOutlined />
           </UploadMultilField>
-        </Form.Item>
+        </Dragger>
       </Col>
     </Row>
   );

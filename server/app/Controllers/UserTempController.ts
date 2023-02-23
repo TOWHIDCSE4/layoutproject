@@ -26,14 +26,12 @@ export default class AdminController extends BaseController {
     const { auth } = this.request;
     let inputs = this.request.all();
     let project = [
-      "user_temps.username",
       "user_temps.email",
       "user_temps.roleId",
       "user_temps.id",
       "tenants.name as tenantName",
       "roles.name as roleName",
       "user_temps.createdAt",
-      "ag.username as agUsername",
     ];
 
     let role = await this.RoleModel.getById(auth.roleId);
@@ -54,7 +52,6 @@ export default class AdminController extends BaseController {
     };
     let inputs = this.request.all();
     let userTemp = await this.Model.query().where("id", auth.id).first();
-    logger.info(`View Detail [usernameView:${userTemp.username}] `);
     let params = this.validate(inputs, allowFields, {
       removeNotAllow: true,
     });
@@ -63,10 +60,6 @@ export default class AdminController extends BaseController {
       logger.error(`Critical:Show detail user ERR: user doesn't exist!`);
       throw new ApiException(6000, "user doesn't exist!");
     }
-    logger.info(
-      `Show detail user [usernameView:${userTemp.username
-      },username:${JSON.stringify(result)}] `
-    );
     return result;
   }
 
@@ -74,7 +67,6 @@ export default class AdminController extends BaseController {
     let token = Auth.generateJWT(
       {
         id: user.id,
-        username: user.username,
         email: user.email,
       },
       {
@@ -97,9 +89,7 @@ export default class AdminController extends BaseController {
     let userInfo = {
       ...inputs
     }
-    let usernameExist = await this.Model.findExist(inputs.username, "username");
-    if (usernameExist) throw new ApiException(6007, "Username already exists!");
-
+    
     let emailExist = await this.Model.findExist(inputs.email, "email");
     if (emailExist) throw new ApiException(6021, "Email already exists!");
 
@@ -113,6 +103,7 @@ export default class AdminController extends BaseController {
       createdBy: auth.id,
     };
     let result = await this.Model.insertOne(params);
+    let code = hashNumber(String(result.id));
 
     delete result["password"];
 
@@ -167,7 +158,6 @@ export default class AdminController extends BaseController {
       email: "string!",
     };
     let userTemp = await this.Model.getById(auth.id);
-    logger.info(`Update user [username:${userTemp.username}] `);
     let params = this.validate(inputs, allowFields, {
       removeNotAllow: true,
     });
@@ -260,21 +250,15 @@ export default class AdminController extends BaseController {
       ...params,
       twofaKey,
       isFirst: 1,
-      username: userTemp.username, //remember to remove this in the future
       email: userTemp.email,
       roleId: userTemp.roleId,
       tenantId: userTemp.tenantId,
       password: userTemp.password,
       createdBy: userTemp.createdBy,
-      image: fieldnameFile.length ? fieldnameFile[0].link : null
+      photo: fieldnameFile.length ? fieldnameFile[0].link : null
     }
 
     let result = await UserModel.insertOne(params);
-    logger.info(
-      `Create user [username:${user.username},userCreted:${JSON.stringify(
-        result
-      )}] `
-    );
     let code = hashNumber(String(result.id));
     let resultUpdate = await UserModel.updateOne(result.id, { code: code });
 
@@ -299,11 +283,6 @@ export default class AdminController extends BaseController {
     let user = await this.Model.query().where("id", params.id).first();
     await user.$query().delete();
     let userAuth = await this.Model.getById(auth.id);
-    logger.info(
-      `Destroy user [username:${userAuth.username},userDelete:${JSON.stringify(
-        user
-      )}] `
-    );
     return {
       message: `Delete successfully`,
       old: user,
@@ -332,14 +311,5 @@ export default class AdminController extends BaseController {
       await user.$query().delete();
     }
     let userAuth = await this.Model.getById(auth.id);
-    logger.info(
-      `Delete user [username:${userAuth.username
-      },listUserDelete:${JSON.stringify(users)}] `
-    );
-    return {
-      old: {
-        usernames: (users || []).map((user) => user.username).join(", "),
-      },
-    };
   }
 }

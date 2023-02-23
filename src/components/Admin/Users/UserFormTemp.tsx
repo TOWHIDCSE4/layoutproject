@@ -41,35 +41,31 @@ const UserFormTemp = ({ form, isEdit, isTenant = false, }: { form: any; isEdit: 
     <Row gutter={[24, 0]}>
       <Col md={24}>
         <Form.Item
-          label={t("pages:users.form.username")}
-          name="username"
+          label={t("pages:users.form.email")}
+          name="email"
           rules={[
             {
               required: true,
               message: t("messages:form.required", {
-                name: t("pages:users.form.username"),
+                name: t("pages:users.form.email"),
               }),
             },
+            { type: "email", message: t("messages:form.email") },
             {
-              whitespace: true,
-              message: t("messages:form.required", {
-                name: t("pages:users.form.username"),
+              max: 100,
+              message: t("messages:form.maxLength", {
+                name: t("pages:users.form.email"),
+                length: 100,
               }),
             },
-            CustomRegex({
-              length: 6,
-              reGex: "^[0-9A-z._](\\w|\\.|_){5,100}$",
-              message: t("messages:form.username"),
-            }),
           ]}
         >
           <Input
-            placeholder={t("pages:users.form.username")}
-            readOnly={isEdit}
+            placeholder={t("pages:users.form.email")}
+            type="email"
           />
         </Form.Item>
       </Col>
-
       {!isEdit ? (
         <>
           <Col md={24}>
@@ -102,34 +98,6 @@ const UserFormTemp = ({ form, isEdit, isTenant = false, }: { form: any; isEdit: 
           </Col>
         </>
       ) : null}
-
-      <Col md={24}>
-        <Form.Item
-          label={t("pages:users.form.email")}
-          name="email"
-          rules={[
-            {
-              required: true,
-              message: t("messages:form.required", {
-                name: t("pages:users.form.email"),
-              }),
-            },
-            { type: "email", message: t("messages:form.email") },
-            {
-              max: 100,
-              message: t("messages:form.maxLength", {
-                name: t("pages:users.form.email"),
-                length: 100,
-              }),
-            },
-          ]}
-        >
-          <Input
-            placeholder={t("pages:users.form.email")}
-            type="email"
-          />
-        </Form.Item>
-      </Col>
       {!isEdit && !isTenant ? (
         <>
           <Col md={24}>

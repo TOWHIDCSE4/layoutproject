@@ -14,12 +14,12 @@ class UserModel extends BaseModel {
   //fields
   id: number;
   code: string;
-  username: string;
+  // username: string;
   password: string;
   firstName: string;
   lastName: string;
   email: string;
-  image: string;
+  photo: string;
   birthday: any;
   phone: number;
   others:any;

@@ -48,13 +48,13 @@ const Index = () => {
       sorter: true,
       filterable: true,
     },
-    {
-      title: t("pages:users.table.username"),
-      dataIndex: "username",
-      key: "users.username",
-      sorter: true,
-      filterable: true,
-    },
+    // {
+    //   title: t("pages:users.table.username"),
+    //   dataIndex: "username",
+    //   key: "users.username",
+    //   sorter: true,
+    //   filterable: true,
+    // },
     {
       title: t("pages:users.table.email"),
       dataIndex: "email",

@@ -16,7 +16,6 @@ export default class AdminController extends BaseController {
     const { auth } = this.request;
     let inputs = this.request.all()
     let project = [
-      "users.username",
       "users.firstName",
       "users.lastName",
       "users.email",
@@ -26,11 +25,8 @@ export default class AdminController extends BaseController {
       "tenants.name as tenantName",
       "roles.name as roleName",
       "users.createdAt",
-      "ag.username as agUsername",
     ]
-    // let getAccountsItCreated = await this.Model.getAccountsItCreated(auth.id)
     let tenantId = await this.Model.getTenantId(auth.id)
-    // let getAccountsItCreatedId = getAccountsItCreated.map(item => item.id)
 
     let role = await this.RoleModel.getById(auth.roleId);
     let query = this.Model.query()
@@ -59,14 +55,12 @@ export default class AdminController extends BaseController {
     }
     let inputs = this.request.all();
     let user = await this.Model.query().where('id', auth.id).first()
-    logger.info(`View Detail [usernameView:${user.username}] `)
     let params = this.validate(inputs, allowFields, { removeNotAllow: true });
     let result = await this.Model.getOne({ code: params.id });
     if (!result) {
       logger.error(`Critical:Show detail user ERR: user doesn't exist!`);
       throw new ApiException(6000, "user doesn't exist!")
     }
-    logger.info(`Show detail user [usernameView:${user.username},username:${JSON.stringify(result)}] `)
     delete result['password']
     delete result['twofaKey']
     delete result['isFirst']
@@ -80,7 +74,6 @@ export default class AdminController extends BaseController {
     const allowFields = {
       firstName: "string!",
       lastName: "string!",
-      username: "string!",
       password: "string!",
       roleId: "number!",
       email: "string!",
@@ -88,7 +81,6 @@ export default class AdminController extends BaseController {
       tenantId: "number"
     }
     let user = await this.Model.query().where('id', auth.id).first()
-    logger.info(`Create user [username:${user.username}] `)
     let params = this.validate(inputs, allowFields, { removeNotAllow: true });
     let twoFa = typeof params.twofa === 'undefined' ? 0 : params.twofa ? 1 : 0;
     let tenantId = null
@@ -106,13 +98,7 @@ export default class AdminController extends BaseController {
       } 
       tenantId = checkTenant.id
     }
-    let username = params.username.replace(/^[\s\uFEFF\xA0]+|[\s\uFEFF\xA0]+$/g, '')
-    let usernameExist = await this.Model.findExist(username, 'username')
-    if (usernameExist){
-      logger.error(`Critical:User created ERR: Username already exists! `);
-      throw new ApiException(6007, "Username already exists!")
-    } 
-
+    
     let emailExist = await this.Model.findExist(params.email, 'email')
     if (emailExist) {
       logger.error(`Critical:User created ERR: Email already exists! `);
@@ -141,7 +127,6 @@ export default class AdminController extends BaseController {
       tenantId: tenantId
     }
     let result = await this.Model.insertOne(params);
-    logger.info(`Create user [username:${user.username},userCreted:${JSON.stringify(result)}] `)
     let code = hashNumber(String(result.id));
     let resultUpdate = await this.Model.updateOne(result.id, { code: code });
     delete resultUpdate['password']
@@ -162,7 +147,6 @@ export default class AdminController extends BaseController {
       twofa: "boolean"
     }
     let user = await this.Model.getById(auth.id)
-    logger.info(`Update user [username:${user.username}] `)
     let params = this.validate(inputs, allowFields, { removeNotAllow: true });
     let twoFa = typeof params.twofa === 'undefined' ? 0 : params.twofa ? 1 : 0;
     const { id } = params
@@ -186,7 +170,6 @@ export default class AdminController extends BaseController {
     }
 
     let result = await this.Model.updateOne(id, { ...dataUpdate });
-    logger.info(`Update user [username:${user.username},userUpdate:${JSON.stringify(result)}] `)
     delete result['password']
     delete result['twofaKey']
     delete result['isFirst']
@@ -213,7 +196,6 @@ export default class AdminController extends BaseController {
     let user = await this.Model.query().where('id', params.id).first()
     await user.$query().delete()
     let userAuth = await this.Model.getById(auth.id)
-    logger.info(`Destroy user [username:${userAuth.username},userDelete:${JSON.stringify(user)}] `)
     return {
       message: `Delete successfully`,
       old: user
@@ -243,18 +225,11 @@ export default class AdminController extends BaseController {
       await user.$query().delete()
     }
     let userAuth = await this.Model.getById(auth.id)
-    logger.info(`Detele user [username:${userAuth.username},listUserDelete:${JSON.stringify(users)}] `)
-    return {
-      old: {
-        usernames: (users || []).map(user => user.username).join(', ')
-      }
-    };
   }
 
   async getInfo() {
     const { auth } = this.request;
     let result = await this.Model.getById(auth.id);
-    logger.info(`Show info [username:${result.username}] `)
     delete result['password']
     delete result['twofaKey']
     delete result['isFirst']

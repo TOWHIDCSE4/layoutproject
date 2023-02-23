@@ -46,7 +46,7 @@ const UserForm = ({
 
 	return (
 		<Row gutter={[24, 0]}>
-			<Col md={24}>
+			{/* <Col md={24}>
 				<Form.Item
 					label={t("pages:users.form.username")}
 					name="username"
@@ -75,7 +75,7 @@ const UserForm = ({
 						readOnly={isEdit}
 					/>
 				</Form.Item>
-			</Col>
+			</Col> */}
 			{!isEdit ? (
 				<>
 					<Col md={24}>

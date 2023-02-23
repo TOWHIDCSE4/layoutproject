@@ -48,7 +48,6 @@ const Create = () => {
 					name="createAdmin"
 					layout="vertical"
 					initialValues={{
-						username: "",
 						password: randompass(),
 						email: "",
 						groupId: undefined,

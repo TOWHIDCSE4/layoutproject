@@ -1,99 +1,37 @@
-import React, { useState, useEffect, Fragment } from "react";
-import { Layout, Drawer, BackTop, Row, Col, Typography } from "antd";
-import useBaseHooks from "@src/hooks/BaseHook";
-import usePermissionHook from "@src/hooks/PermissionHook";
-import { getRouteData } from '@src/helpers/routes'
-import dynamic from 'next/dynamic';
-import getConfig from 'next/config';
-import useSWR from 'swr'
-
-
-const Sidebar = dynamic(() => import('./includes/Admin/Sidebar'), { ssr: false })
-const Header = dynamic(() => import('./includes/Admin/Header'), { ssr: false })
-const BreadCrumb = dynamic(() => import('@src/components/BreadCrumb'), { ssr: false })
-
-const THEME ="dark";
+import React from 'react';
+import Head from 'next/head';
+import { Row, Col, Layout,BackTop } from 'antd'
+import getConfig from 'next/config'
 const { publicRuntimeConfig } = getConfig()
-const { Title, Text } = Typography;
 const { Content, Footer } = Layout;
+import useBaseHooks from "@src/hooks/BaseHook";
 
-const TempUserInfo = (props: any) => {
-  const { router, t, setStore } = useBaseHooks();
-  const { checkPermission } = usePermissionHook();
-  const [collapsed, setCollapsed] = useState(true);
-  const [isMobile, setIsMobile] = useState(true);
-
-  const onCollapseChange = (value: boolean) => {
-    // setCollapsed(true);
-  };
-
-  const updateSize = () => {
-    const mobile = window.innerWidth < 992;
-    setIsMobile(mobile);
-    setStore("isMobile", mobile);
-    // setCollapsed(true);
-  };
-
-  useEffect(() => {
-    window.addEventListener("resize", updateSize);
-    updateSize();
-    return () => window.removeEventListener("resize", updateSize);
-  }, []);
-
-  const getRouteName = async () => {
-    const routePath = router.pathname;
-    const routeData: any = await getRouteData();
-    for (let routeName in routeData) {
-      let routeElement = routeData[routeName];
-      if (!routeElement.action) continue;
-      if (routeElement.action.substr(5) === routePath) return routeName;
-    }
-  }
-
-  const { data: routeName } = useSWR("getRouteName", () => getRouteName());
-
-
-  return (
-    <Fragment>
-     
-      <div id="admin">
-        <Layout hasSider={false}>
-          
-          <Layout>
-            <div id="primaryLayout"></div>
-
-            <Content className={`main-layout ${collapsed ? "collapsed" : ""}`}>
-              {/* <Header onCollapseChange={onCollapseChange} /> */}
-              <div className="breadcumbs">
-                <Row>
-                  <Col xs={24} lg={12} xl={15}>
-                    <Title level={4}>
-                      {props.title || t(`pages:${(routeName || "").replace("frontend.admin.", "")}.title`)}
-                    </Title>
-                    <Text>
-                      {props.description || t(`pages:${(routeName || "").replace("frontend.admin.", "")}.description`)}
-                    </Text>
-                  </Col>
-                  {/* <Col xs={24} lg={12} xl={9}>
-                    <div className="breadcumb-right">
-                      <BreadCrumb />
-                    </div>
-                  </Col> */}
-                </Row>
-              </div>
+const Login = (props: any) => {
+  const { t } = useBaseHooks();
+  return <Layout>
+    <Head>
+      <title>Update User Infor</title>
+      <meta property="og:title" content={props.title || publicRuntimeConfig.TITLE} />
+      <meta property="og:description" content={props.description || publicRuntimeConfig.DESCRIPTION} />
+      <link rel="shortcut icon" type="image/png" href={publicRuntimeConfig.FAVICON} />
+      <meta property="og:image" content={publicRuntimeConfig.LOGO} />
+      <link rel="apple-touch-icon" href={publicRuntimeConfig.LOGO}></link>
+    </Head>
+    <div id="login">
+      <Content className="content">
+          <div className="background-login" style={{height:"250px"}}></div>
+          <div className="background-login-display"></div>
+          <div >
+            {/* <Row gutter={[24, 0]}> */}
+              {/* <Col md={{span: 12, offset: 8}} xs={24}> */}
               {props.children}
-            </Content>
-            <Footer className="footer">{t("common:copyright", { version: publicRuntimeConfig.VERSION, date: new Date().getFullYear() })}</Footer>            <BackTop
-              className={"backTop"}
-              target={() =>
-                document.querySelector("#primaryLayout") as HTMLElement
-              }
-            />
-          </Layout>
-        </Layout>
-      </div>
-    </Fragment>
-  )
+              {/* </Col> */}
+            {/* </Row> */}
+          </div>
+      </Content>
+    </div>
+    
+  </Layout>
 }
 
-export default TempUserInfo;
+export default Login;
