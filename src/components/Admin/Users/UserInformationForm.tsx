@@ -234,6 +234,7 @@ const UserInformationForm = ({ form }: { form: any; }) => {
 						// multiple={false}
 						name="avatar"
 					>
+						<p>Click or drag the file into this area to upload</p>
 						<UploadMultilField
 							listType="picture-card"
 							isImg={true}
