@@ -6,11 +6,11 @@ const { publicRuntimeConfig } = getConfig()
 const { Content, Footer } = Layout;
 import useBaseHooks from "@src/hooks/BaseHook";
 
-const Login = (props: any) => {
+const TempUserInfo = (props: any) => {
   const { t } = useBaseHooks();
   return <Layout>
     <Head>
-      <title>Update User Infor</title>
+      <title>{props.title || publicRuntimeConfig.TITLE}</title>
       <meta property="og:title" content={props.title || publicRuntimeConfig.TITLE} />
       <meta property="og:description" content={props.description || publicRuntimeConfig.DESCRIPTION} />
       <link rel="shortcut icon" type="image/png" href={publicRuntimeConfig.FAVICON} />
@@ -19,7 +19,7 @@ const Login = (props: any) => {
     </Head>
     <div id="login">
       <Content className="content">
-          <div className="background-login" style={{height:"250px"}}></div>
+          <div className="background-login"></div>
           <div className="background-login-display"></div>
           <div >
             {/* <Row gutter={[24, 0]}> */}
@@ -34,4 +34,4 @@ const Login = (props: any) => {
   </Layout>
 }
 
-export default Login;
+export default TempUserInfo;

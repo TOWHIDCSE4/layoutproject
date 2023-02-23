@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Input, Row, Col,Upload } from "antd";
+import { Form, Input, Row, Col,Upload, Select } from "antd";
 import useBaseHook from "@src/hooks/BaseHook";
 import { InboxOutlined } from "@ant-design/icons";
 import _ from "lodash";
@@ -11,6 +11,12 @@ const UserInformationForm = ({ form }: { form: any; }) => {
     const info = files[0]
     form?.setFieldsValue({ 'avatar': info });
   }
+  const onChange = (value) => {
+    console.log(`selected ${value}`);
+  };
+  const onSearch = (value) => {
+    console.log('search:', value);
+  };
 
   return (
     <Row gutter={[24, 0]}>
@@ -134,7 +140,76 @@ const UserInformationForm = ({ form }: { form: any; }) => {
           <Input type="date" placeholder={t("pages:users.form.birthday")} />
         </Form.Item>
       </Col>
-      <Col md={6}>
+      <Col md={12}>
+        <Form.Item
+          label={t("pages:users.form.gender")}
+          name="gender"
+          rules={[
+            {
+              required: true,
+              message: t("messages:form.required", {
+                name: t("pages:users.form.gender"),
+              }),
+            },
+            {
+              whitespace: true,
+              message: t("messages:form.required", {
+                name: t("pages:users.form.gender"),
+              }),
+            },
+            {
+              max: 255,
+              message: t("messages:form.maxLength", {
+                name: t("pages:users.form.gender"),
+                length: 255,
+              }),
+            },
+          ]}
+        >
+          <Select
+            showSearch
+            placeholder="Select a gender"
+            optionFilterProp="children"
+            onChange={onChange}
+            onSearch={onSearch}
+            filterOption={(input, option) =>
+              (option?.label ?? '').toLowerCase().includes(input.toLowerCase())
+            }
+            options={[
+              {
+                value: 'male',
+                label: 'Male',
+              },
+              {
+                value: 'female',
+                label: 'Female',
+              },
+
+            ]}
+          />
+        </Form.Item>
+      </Col>
+      <Col md={12}>
+        <Form.Item
+          label={t("pages:users.form.method")}
+          name="method"
+         
+        >
+        <Input type="text" placeholder={t("pages:users.form.method")} />
+
+        </Form.Item>
+      </Col>
+      <Col md={24}>
+        <Form.Item
+          label={t("pages:users.form.marital")}
+          name="marital"
+         
+        >
+        <Input type="text" placeholder={t("pages:users.form.marital")} />
+
+        </Form.Item>
+      </Col>
+      <Col md={24}>
         <Dragger className="ant-upload-drag-icon"
           // multiple={false}
           name="avatar">

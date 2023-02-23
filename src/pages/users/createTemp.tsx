@@ -6,6 +6,8 @@ import {SaveFilled } from "@ant-design/icons";
 import UserInformationForm from "@root/src/components/Admin/Users/UserInformationForm";
 import Layout from "@src/layouts/TempUserInfo";
 import to from "await-to-js";
+import getConfig from 'next/config'
+const { publicRuntimeConfig } = getConfig()
 
 const CreateTemp = () => {
   const { t, notify, redirect, router } = useBaseHook();
@@ -43,15 +45,19 @@ const CreateTemp = () => {
 
   return (
     <>
-      <div className="content"style={{top:"300px"}}>
-        {/* <div className="logo"></div> */}
-        <div className="form-registration" id="registration">
-          {/* <div className="content-form-login">
+      <div >
+      <div className="content-form">
+        <div className="logo">
+          <div className="img">
+            <img src={publicRuntimeConfig.LOGO}></img>
+          </div>
+          {/* <div className="sitename">{t('pages:login.content')}</div> */}
+        </div>
+        <div className='form-registration'>
+          <div className="content-form-login">
             <div className="sitename-title">Create a new account</div>
-            <div className="sitename">
-              Fill out the information to create a new account
-            </div>
-          </div> */}
+            <div className="sitename">Fill out the information to create a new account</div>
+          </div>
           <Form
             form={form}
             name="createAdmin"
@@ -69,7 +75,7 @@ const CreateTemp = () => {
             <Row>
               <Col md={{ span: 24, offset: 0 }}>
                 <UserInformationForm form={form} />
-                <Form.Item  wrapperCol={{ span: 8, offset: 8 }} className="text-center">
+                <Form.Item  wrapperCol={{ span: 8, offset: 10 }} className="text-center top-margin">
                   <Button
                     type="primary"
                     htmlType="submit"
@@ -83,6 +89,7 @@ const CreateTemp = () => {
             </Row>
           </Form>
         </div>
+      </div>
       </div>
     </>
   );
