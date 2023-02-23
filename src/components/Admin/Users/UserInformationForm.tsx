@@ -228,21 +228,22 @@ const UserInformationForm = ({ form }: { form: any; }) => {
 			</Col>
 
 			<Col md={24}>
-				<Dragger
-					className="ant-upload-drag-icon"
-					// multiple={false}
-					name="avatar"
-				>
-					<p>{t("pages:users.form.avatar")}</p>
-					<UploadMultilField
-						listType="picture-card"
-						isImg={true}
-						multiple={false}
-						onChange={handleFileChange}
+				<Form.Item label={t("pages:users.form.avatar")} name="avatar">
+					<Dragger
+						className="ant-upload-drag-icon"
+						// multiple={false}
+						name="avatar"
 					>
-						<InboxOutlined />
-					</UploadMultilField>
-				</Dragger>
+						<UploadMultilField
+							listType="picture-card"
+							isImg={true}
+							multiple={false}
+							onChange={handleFileChange}
+						>
+							<InboxOutlined />
+						</UploadMultilField>
+					</Dragger>
+				</Form.Item>
 			</Col>
 		</Row>
   );
