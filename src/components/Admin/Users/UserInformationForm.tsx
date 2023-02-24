@@ -4,6 +4,7 @@ import useBaseHook from "@src/hooks/BaseHook";
 import { InboxOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import UploadMultilField from "../../Upload";
+import DragUploadMultilField from "../../DragUpload";
 const { Dragger } = Upload;
 const UserInformationForm = ({ form }: { form: any; }) => {
   const { t } = useBaseHook();
@@ -210,7 +211,7 @@ const UserInformationForm = ({ form }: { form: any; }) => {
         </Form.Item>
       </Col>
       <Col md={24}>
-        <Dragger className="ant-upload-drag-icon"
+        {/* <Dragger className="ant-upload-drag-icon"
           // multiple={false}
           name="avatar">
           <p>{t("pages:users.form.avatar")}</p>
@@ -218,7 +219,16 @@ const UserInformationForm = ({ form }: { form: any; }) => {
             multiple={false} onChange={handleFileChange}>
             <InboxOutlined />
           </UploadMultilField>
-        </Dragger>
+        </Dragger> */}
+        <Form.Item
+          label={t("pages:users.form.avatar")}
+          name="avatar"  
+        >
+        <DragUploadMultilField listType="picture-card" isImg={true}
+            multiple={false} onChange={handleFileChange}>
+        <InboxOutlined />
+        </DragUploadMultilField>
+        </Form.Item>
       </Col>
     </Row>
   );
