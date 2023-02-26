@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
-import { Upload, Modal } from "antd";
-import { UploadFile } from "antd/lib/upload/interface";
 import { InboxOutlined } from "@ant-design/icons";
+import { Modal, Upload } from "antd";
+import { UploadFile } from "antd/lib/upload/interface";
+import { useEffect, useRef, useState } from "react";
 
 const { Dragger } = Upload;
 
@@ -100,24 +100,27 @@ const DragUploadMultilField = ({
       >
         {!_limit || fileList.length < _limit ? children : ""}
       </Upload> */}
-      <Dragger 
-       listType={listType}
-       maxCount={1}
-       multiple={false}
-       beforeUpload={_beforeUpload}
-       onRemove={onRemove}
-       fileList={fileList}
-       onPreview={handlePreview}
-       {...otherProps}>
-    <p className="ant-upload-drag-icon">
-      <InboxOutlined />
-    </p>
-    <p className="ant-upload-text">Click or drag file to this area to upload</p>
-    <p className="ant-upload-hint">
-      Support for a single or bulk upload. Strictly prohibit from uploading company data or other
-      band files
-    </p>
-  </Dragger>
+      <Dragger
+        listType={listType}
+        maxCount={1}
+        multiple={false}
+        beforeUpload={_beforeUpload}
+        onRemove={onRemove}
+        fileList={fileList}
+        onPreview={handlePreview}
+        {...otherProps}
+      >
+        <p className="ant-upload-drag-icon">
+          <InboxOutlined />
+        </p>
+        <p className="ant-upload-text">
+          Click or drag file to this area to upload
+        </p>
+        <p className="ant-upload-hint">
+          Support for a single or bulk upload. Strictly prohibit from uploading
+          company data or other band files
+        </p>
+      </Dragger>
       <Modal open={previewVisible} footer={null} onCancel={handleCancel}>
         <img alt="example" style={{ width: "100%" }} src={previewImg} />
       </Modal>
