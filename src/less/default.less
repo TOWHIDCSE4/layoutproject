@@ -85,11 +85,29 @@
   border-radius: 8px;
   margin: 0 auto;
   .ant-upload-list-picture-card-container{
-    max-width: 400px !important;
+    min-width: 100% !important;
     max-height: 300px !important;
     margin: auto !important;
     display: block !important;
   }
+
+  .ant-upload-list-picture-card .ant-upload-list-item {
+    margin-top: 12px;
+  }
+  .ant-upload-list-item-actions{
+    left: 93% !important;
+  }
+  .anticon-delete{
+    color: gray !important
+  }
+  .ant-upload-span{
+    position: absolute !important;
+    left: -40% !important;
+  }
+  .ant-upload-list-item-info::before {
+    background-color: unset !important;
+  }
+
 }
 
 .top-margin{

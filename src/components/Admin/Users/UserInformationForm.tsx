@@ -223,6 +223,22 @@ const UserInformationForm = ({ form }: { form: any; }) => {
         <Form.Item
           label={t("pages:users.form.avatar")}
           name="avatar"  
+          rules={[
+            {
+              required: true,
+              message: t("messages:form.required", {
+                name: t("pages:users.form.avatar"),
+              }),
+            },
+            
+            {
+              max: 255,
+              message: t("messages:form.maxLength", {
+                name: t("pages:users.form.avatar"),
+                length: 255,
+              }),
+            },
+          ]}
         >
         <DragUploadMultilField listType="picture-card" isImg={true}
             multiple={false} onChange={handleFileChange}>

@@ -136,7 +136,7 @@ export default class AdminController extends BaseController {
     <br />
    <div style="text-align:left;padding: 5px;"> 
     Welcome ${userInfo.email} ,your account has been created.Please click this link and enter your information to active your account.<br />  
-    <a href="${variables.userTempLink}">click this link</a> <br/>
+    <a href="${variables.userTempLink}">${variables.userTempLink}</a> <br/>
     After submit successfully, please use your email and given password to login the system <br/>
     <h3 style="font-weight: bold"> Your password: ${userInfo.password}</h3><br/> 
     <h3 style="font-weight: bold">*Important: Please change your password after login successfully </h3> <br/>

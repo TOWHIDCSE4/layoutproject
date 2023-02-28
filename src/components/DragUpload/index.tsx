@@ -64,7 +64,26 @@ const DragUploadMultilField = ({
     }
   };
 
+  const validateFileType = (
+    { type, name }: UploadFile,
+    allowedTypes?: string
+  ) => {
+    if (!allowedTypes) {
+      return true;
+    }
+
+    if (type) {
+      return allowedTypes.includes(type);
+    }
+  };
   const _beforeUpload = (file: UploadFile) => {
+    const isAllowedType = validateFileType(file, "image/png");
+    if (!isAllowedType) {
+      // setFileList((state) => [...state]);
+      // message.error(`${file.name} is not PNG file`);
+      console.error('file is not png')
+      return false;
+    }
     if (beforeUpload) file = beforeUpload(file);
     addFile(file);
     return false;
