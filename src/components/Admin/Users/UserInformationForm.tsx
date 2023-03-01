@@ -7,7 +7,7 @@ import UploadMultilField from "../../Upload";
 import ValidatorHook from "@root/src/hooks/ValidatorHook"
 import DragUploadMultilField from "../../DragUpload";
 const { Dragger } = Upload;
-const {limitSizeImageSP} = ValidatorHook()
+const {limitSizeImageSP, limitSizeImage, extensionImage} = ValidatorHook()
 const UserInformationForm = ({ form }: { form: any; }) => {
   const { t } = useBaseHook();
   const handleFileChange = async (files) => {
@@ -228,11 +228,12 @@ const UserInformationForm = ({ form }: { form: any; }) => {
           rules={[
             {
               required: true,
-              message: t("messages:form.requiredImage", {
+              message: t("messages:form.required", {
                 name: t("pages:users.form.avatar"),
               }),
             },
-            limitSizeImageSP("File size must be less than 5MB", 5)
+            limitSizeImage("File size must be less than 5MB", 5),
+            extensionImage("Required image file (png/jpg/jpeg)")
             
           ]}
         >
