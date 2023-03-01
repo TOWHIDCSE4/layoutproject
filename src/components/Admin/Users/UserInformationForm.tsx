@@ -5,11 +5,20 @@ import { InboxOutlined } from "@ant-design/icons";
 import _ from "lodash";
 import UploadMultilField from "../../Upload";
 import ValidatorHook from "@root/src/hooks/ValidatorHook"
+import { validations } from "@src/config/ListVadidations";
 import DragUploadMultilField from "../../DragUpload";
 const { Dragger } = Upload;
 const {limitSizeImageSP, limitSizeImage, extensionImage} = ValidatorHook()
-const UserInformationForm = ({ form }: { form: any; }) => {
+const UserInformationForm = ({ fieldGroup,form }: { fieldGroup: {
+  label: string;
+  fieldName: string;
+  validations: string[];
+};form: any; }) => {
   const { t } = useBaseHook();
+  let listValidations =
+  fieldGroup?.validations?.map((item) => {
+    return validations({ name: fieldGroup.label, validation: item, t: t });
+  }) || [];
   const handleFileChange = async (files) => {
     const info = files[0]
     form?.setFieldsValue({ 'avatar': info });
@@ -226,6 +235,7 @@ const UserInformationForm = ({ form }: { form: any; }) => {
           label={t("pages:users.form.avatar")}
           name="avatar"  
           rules={[
+            ...listValidations,
             {
               required: true,
               message: t("messages:form.required", {
