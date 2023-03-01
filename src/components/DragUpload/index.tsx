@@ -1,7 +1,9 @@
 import { InboxOutlined } from "@ant-design/icons";
-import { Modal, Upload } from "antd";
+import { message, Modal, Upload } from "antd";
 import { UploadFile } from "antd/lib/upload/interface";
 import { useEffect, useRef, useState } from "react";
+import ValidatorHook from "@root/src/hooks/ValidatorHook"
+const {limitSizeImageSP, limitSizeImage, extensionImage} = ValidatorHook()
 
 const { Dragger } = Upload;
 
@@ -84,6 +86,18 @@ const DragUploadMultilField = ({
     //   console.error('file is not (png,jpg,jpeg)')
     //   return false;
     // }
+    const isPNG = file.type === 'image/jpg' || file.type === 'image/jpeg' || file.type === 'image/png';
+    if (!isPNG) {
+      message.error(`${file.name} is not a (jpg,jpeg,png) file`);
+      extensionImage("Required image file (png/jpg/jpeg)")
+      return isPNG || Upload.LIST_IGNORE;
+
+    }
+    const isLt5M = file.size / 1024 / 1024 < 5;
+    if (!isLt5M) {
+      message.error('Image must smaller than 5MB!');
+      return
+    }
     if (beforeUpload) file = beforeUpload(file);
     addFile(file);
     return false;
