@@ -84,9 +84,15 @@
   padding: 20px;
   border-radius: 8px;
   margin: 0 auto;
+  .ant-upload-list-picture-card .ant-upload-list-item-info {
+    // position: relative;
+    // height: 100%;
+    overflow: unset !important;
+}
+
   .ant-upload-list-picture-card-container{
     min-width: 100% !important;
-    max-height: 300px !important;
+    max-height: 500px !important;
     margin: auto !important;
     display: block !important;
   }
@@ -106,6 +112,18 @@
   .ant-upload-span{
     position: absolute !important;
     left: -40% !important;
+    display: inline-block;
+  }
+  .ant-upload-list-item-name{
+    display: block !important;
+    color: gray !important;
+    overflow: hidden !important;
+    white-space: nowrap !important;
+    text-overflow: ellipsis !important;
+    padding: 0 8px !important;
+    line-height: 1.5714285714285714 !important;
+    flex: auto !important;
+    transition: all .3s !important;
   }
   .ant-upload-list-item-info::before {
     background-color: unset !important;
